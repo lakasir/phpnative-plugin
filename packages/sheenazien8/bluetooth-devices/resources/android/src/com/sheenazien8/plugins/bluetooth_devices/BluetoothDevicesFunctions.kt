@@ -7,6 +7,8 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -19,6 +21,13 @@ import android.util.Log
 object BluetoothState {
     var scannerCallback: ScanCallback? = null
     var activeGatt: BluetoothGatt? = null
+}
+
+fun dispatchEvent(activity: FragmentActivity, eventClass: String, payload: Map<String, Any>) {
+    val payloadJson = JSONObject(payload).toString()
+    Handler(Looper.getMainLooper()).post {
+        NativeActionCoordinator.dispatchEvent(activity, eventClass, payloadJson)
+    }
 }
 
 object BluetoothDevicesFunctions {
@@ -108,13 +117,10 @@ object BluetoothDevicesFunctions {
 
                         Log.d("BluetoothBridge", "Device found: $deviceName - $deviceAddress")
 
-                        NativeActionCoordinator.dispatchEvent(
+                        dispatchEvent(
                             activity,
-                            "bluetooth.device_found",
-                            JSONObject(mapOf(
-                                "name" to deviceName,
-                                "address" to deviceAddress
-                            )).toString()
+                            "Sheenazien8\\BluetoothDevices\\Events\\BluetoothDeviceFound",
+                            mapOf("name" to deviceName, "address" to deviceAddress)
                         )
                     } catch (e: Exception) {
                         Log.e("BluetoothBridge", "Error dispatching event", e)
@@ -130,13 +136,10 @@ object BluetoothDevicesFunctions {
                 override fun onScanFailed(errorCode: Int) {
                     Log.e("BluetoothBridge", "Scan failed with error code: $errorCode")
                     try {
-                        NativeActionCoordinator.dispatchEvent(
+                        dispatchEvent(
                             activity,
-                            "bluetooth.scan_error",
-                            JSONObject(mapOf(
-                                "error_code" to errorCode,
-                                "error_message" to "Scan failed with code $errorCode"
-                            )).toString()
+                            "Sheenazien8\\BluetoothDevices\\Events\\BluetoothScanError",
+                            mapOf("errorCode" to errorCode, "message" to "Scan failed with code $errorCode")
                         )
                     } catch (e: Exception) {
                         Log.e("BluetoothBridge", "Error dispatching scan failed event", e)
@@ -158,6 +161,7 @@ object BluetoothDevicesFunctions {
     class Connect(private val context: Context) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
             val address = parameters["address"] as String
+            val activity = context as FragmentActivity
             val adapter = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
             val device = adapter.getRemoteDevice(address)
 
@@ -165,13 +169,10 @@ object BluetoothDevicesFunctions {
                 override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
                     val stateString = if (newState == BluetoothProfile.STATE_CONNECTED) "connected" else "disconnected"
                     try {
-                        NativeActionCoordinator.dispatchEvent(
-                            context as FragmentActivity,
-                            "bluetooth.state_changed",
-                            JSONObject(mapOf(
-                                "address" to gatt.device.address,
-                                "state" to stateString
-                            )).toString()
+                        dispatchEvent(
+                            activity,
+                            "Sheenazien8\\BluetoothDevices\\Events\\BluetoothStateChanged",
+                            mapOf("address" to gatt.device.address, "state" to stateString)
                         )
                     } catch (e: Exception) {
                         Log.e("BluetoothBridge", "Error dispatching state changed", e)
@@ -199,20 +200,32 @@ object BluetoothDevicesFunctions {
         }
     }
 
+    private fun dispatchPermissionStatus(activity: FragmentActivity, context: Context) {
+        val (hasPermissions, missingPermissions) = checkBluetoothPermissions(context)
+
+        val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
+        val adapter = bluetoothManager?.adapter
+        val isBluetoothEnabled = adapter?.isEnabled == true
+
+        Log.d("BluetoothBridge", "Dispatching permission status: has=$hasPermissions, missing=$missingPermissions, bt_enabled=$isBluetoothEnabled")
+
+        dispatchEvent(
+            activity,
+            "Sheenazien8\\BluetoothDevices\\Events\\BluetoothPermissionsChecked",
+            mapOf(
+                "hasPermissions" to hasPermissions,
+                "missingPermissions" to missingPermissions,
+                "bluetoothEnabled" to isBluetoothEnabled,
+                "androidVersion" to Build.VERSION.SDK_INT
+            )
+        )
+    }
+
     class CheckPermissions(private val context: Context) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
-            val (hasPermissions, missingPermissions) = checkBluetoothPermissions(context)
-
-            val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-            val adapter = bluetoothManager?.adapter
-            val isBluetoothEnabled = adapter?.isEnabled == true
-
-            return BridgeResponse.success(mapOf(
-                "has_permissions" to hasPermissions,
-                "missing_permissions" to missingPermissions,
-                "bluetooth_enabled" to isBluetoothEnabled,
-                "android_version" to Build.VERSION.SDK_INT
-            ))
+            val activity = context as FragmentActivity
+            dispatchPermissionStatus(activity, context)
+            return BridgeResponse.success(mapOf("status" to "checking"))
         }
     }
 
@@ -222,6 +235,7 @@ object BluetoothDevicesFunctions {
             val (_, missingPermissions) = checkBluetoothPermissions(context)
 
             if (missingPermissions.isEmpty()) {
+                dispatchPermissionStatus(activity, context)
                 return BridgeResponse.success(mapOf("status" to "already_granted"))
             }
 
@@ -241,6 +255,14 @@ object BluetoothDevicesFunctions {
             }
 
             ActivityCompat.requestPermissions(activity, permissionsToRequest.toTypedArray(), 1001)
+
+            val handler = Handler(Looper.getMainLooper())
+            val delays = longArrayOf(1000, 2000, 4000)
+            for (delay in delays) {
+                handler.postDelayed({
+                    dispatchPermissionStatus(activity, context)
+                }, delay)
+            }
 
             return BridgeResponse.success(mapOf(
                 "status" to "requested",

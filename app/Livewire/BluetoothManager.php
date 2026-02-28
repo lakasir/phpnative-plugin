@@ -3,9 +3,14 @@
 namespace App\Livewire;
 
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Native\Mobile\Attributes\OnNative;
+use Sheenazien8\BluetoothDevices\Events\BluetoothDeviceFound;
+use Sheenazien8\BluetoothDevices\Events\BluetoothPermissionsChecked;
+use Sheenazien8\BluetoothDevices\Events\BluetoothScanError;
+use Sheenazien8\BluetoothDevices\Events\BluetoothStateChanged;
+use Sheenazien8\BluetoothDevices\Facades\BluetoothDevices;
 
 #[Layout('layouts.app')]
 #[Title('BluetoothDevices Manager')]
@@ -21,60 +26,44 @@ class BluetoothManager extends Component
 
     public $errorMessage = null;
 
-    public function mount()
+    public function checkPermissions(): void
     {
-        $this->permissionStatus = 'Checking permissions...';
-        // Try to check permissions on mount
+        $this->permissionStatus = 'Checking...';
+        $this->errorMessage = null;
+
         try {
-            $this->checkPermissions();
+            BluetoothDevices::checkPermissions();
         } catch (\Exception $e) {
             $this->permissionStatus = 'Error checking permissions';
             $this->errorMessage = $e->getMessage();
         }
     }
 
-    public function checkPermissions()
-    {
-        $this->permissionStatus = 'Checking...';
-
-        $response = nativephp_call('BluetoothDevices.CheckPermissions', json_encode([]));
-        $result = json_decode($response, true);
-
-        if (isset($result['success']) && $result['success']) {
-            $data = $result['data'] ?? [];
-            $hasPermissions = $data['has_permissions'] ?? false;
-            $bluetoothEnabled = $data['bluetooth_enabled'] ?? false;
-
-            if (! $hasPermissions) {
-                $this->permissionStatus = 'Permissions needed';
-            } elseif (! $bluetoothEnabled) {
-                $this->permissionStatus = 'Bluetooth off';
-            } else {
-                $this->permissionStatus = 'Ready';
-            }
+    #[OnNative(BluetoothPermissionsChecked::class)]
+    public function onPermissionsChecked(
+        $hasPermissions,
+        $bluetoothEnabled,
+        $missingPermissions = [],
+        $androidVersion = 0,
+    ): void {
+        if (! $hasPermissions) {
+            $this->permissionStatus = 'Permissions needed';
+        } elseif (! $bluetoothEnabled) {
+            $this->permissionStatus = 'Bluetooth off';
         } else {
-            $this->permissionStatus = 'Permission check failed';
-            $this->errorMessage = $result['message'] ?? 'Unknown error';
+            $this->permissionStatus = 'Ready';
         }
+
+        $this->errorMessage = null;
     }
 
-    public function requestPermissions()
+    public function requestPermissions(): void
     {
         $this->permissionStatus = 'Requesting...';
         $this->errorMessage = null;
 
         try {
-            $response = nativephp_call('BluetoothDevices.RequestPermissions', json_encode([]));
-            $result = json_decode($response, true);
-
-            if (isset($result['success']) && $result['success']) {
-                // Wait a moment then check again
-                sleep(1);
-                $this->checkPermissions();
-            } else {
-                $this->permissionStatus = 'Request failed';
-                $this->errorMessage = $result['message'] ?? 'Failed to request';
-            }
+            BluetoothDevices::requestPermissions();
         } catch (\Exception $e) {
             $this->permissionStatus = 'Error requesting';
             $this->errorMessage = $e->getMessage();
@@ -85,33 +74,43 @@ class BluetoothManager extends Component
     {
         $this->isScanning = true;
         $this->devices = [];
-        nativephp_call('BluetoothDevices.StartScan', json_encode([]));
+        BluetoothDevices::startScan();
     }
 
-    #[On('native:bluetooth.device_found')]
-    public function onDeviceFound($device)
+    #[OnNative(BluetoothDeviceFound::class)]
+    public function onDeviceFound($name, $address): void
     {
-        if (! collect($this->devices)->contains('address', $device['address'])) {
-            $this->devices[] = $device;
+        if (! collect($this->devices)->contains('address', $address)) {
+            $this->devices[] = [
+                'name' => $name,
+                'address' => $address,
+            ];
         }
     }
 
     public function connect($address)
     {
         $this->connectionStatus = 'Connecting...';
-        nativephp_call('BluetoothDevices.StopScan');
-        nativephp_call('BluetoothDevices.Connect', json_encode(['address' => $address]));
+        BluetoothDevices::stopScan();
+        BluetoothDevices::connect($address);
     }
 
-    #[On('native:bluetooth.state_changed')]
-    public function onStateChanged($payload)
+    #[OnNative(BluetoothStateChanged::class)]
+    public function onStateChanged($address, $state): void
     {
-        $this->connectionStatus = ucfirst($payload['state']);
+        $this->connectionStatus = ucfirst($state);
+    }
+
+    #[OnNative(BluetoothScanError::class)]
+    public function onScanError($errorCode, $message): void
+    {
+        $this->errorMessage = "Scan error ({$errorCode}): {$message}";
+        $this->isScanning = false;
     }
 
     public function disconnect()
     {
-        nativephp_call('BluetoothDevices.Disconnect', json_encode([]));
+        BluetoothDevices::disconnect();
     }
 
     public function render()
