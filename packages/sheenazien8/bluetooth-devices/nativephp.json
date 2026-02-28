@@ -1,0 +1,83 @@
+{
+    "name": "sheenazien8/bluetooth-devices",
+    "version": "1.0.0",
+    "description": "A plugin that can fetch bluetooth devices for you nativephp",
+    "namespace": "BluetoothDevices",
+    "keywords": [],
+    "category": "utilities",
+    "license": "MIT",
+    "pricing": {
+        "type": "free"
+    },
+    "author": {
+        "name": "Your Name",
+        "email": "you@example.com",
+        "url": ""
+    },
+    "homepage": "",
+    "repository": "",
+    "funding": [],
+    "platforms": [
+        "android",
+        "ios"
+    ],
+    "icon": "resources/icon.png",
+    "screenshots": [],
+    "bridge_functions": [
+        {
+            "name": "BluetoothDevices.StartScan",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.StartScan",
+            "description": "Execute the plugin functionality"
+        },
+        {
+            "name": "BluetoothDevices.StopScan",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.StopScan",
+            "description": "Get the current status"
+        },
+        {
+            "name": "BluetoothDevices.Connect",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.Connect",
+            "description": "Execute the plugin functionality"
+        },
+        {
+            "name": "BluetoothDevices.Disconnect",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.Disconnect",
+            "description": "Get the current status"
+        }
+    ],
+    "android": {
+        "permissions": [
+            "android.permission.BLUETOOTH_SCAN",
+            "android.permission.BLUETOOTH_CONNECT",
+            "android.permission.ACCESS_FINE_LOCATION"
+        ],
+        "repositories": [],
+        "dependencies": {
+            "implementation": []
+        },
+        "activities": [],
+        "services": [],
+        "receivers": [],
+        "providers": []
+    },
+    "ios": {
+        "permissions": [],
+        "repositories": [],
+        "dependencies": {
+            "swift_packages": [],
+            "pods": []
+        }
+    },
+    "assets": {
+        "android": [],
+        "ios": []
+    },
+    "secrets": [],
+    "events": [
+        "Sheenazien8\\BluetoothDevices\\Events\\BluetoothDevicesCompleted"
+    ],
+    "service_provider": "Sheenazien8\\BluetoothDevices\\BluetoothDevicesServiceProvider",
+    "hooks": {
+        "copy_assets": "nativephp:bluetooth-devices:copy-assets"
+    }
+}
