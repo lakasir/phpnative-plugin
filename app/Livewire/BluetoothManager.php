@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('layouts.app')]
-#[Title('Bluetooth Manager')]
+#[Title('BluetoothDevices Manager')]
 class BluetoothManager extends Component
 {
     public $devices = [];
@@ -21,7 +21,7 @@ class BluetoothManager extends Component
     {
         $this->isScanning = true;
         $this->devices = [];
-        nativephp_call('Bluetooth.StartScan', json_encode([]));
+        nativephp_call('BluetoothDevices.StartScan', json_encode([]));
     }
 
     #[On('native:bluetooth.device_found')]
@@ -35,8 +35,8 @@ class BluetoothManager extends Component
     public function connect($address)
     {
         $this->connectionStatus = 'Connecting...';
-        nativephp_call('Bluetooth.StopScan'); // Stop scan to save battery
-        nativephp_call('Bluetooth.Connect', json_encode(['address' => $address]));
+        nativephp_call('BluetoothDevices.StopScan'); // Stop scan to save battery
+        nativephp_call('BluetoothDevices.Connect', json_encode(['address' => $address]));
     }
 
     #[On('native:bluetooth.state_changed')]
@@ -47,7 +47,7 @@ class BluetoothManager extends Component
 
     public function disconnect()
     {
-        nativephp_call('Bluetooth.Disconnect', json_encode([]));
+        nativephp_call('BluetoothDevices.Disconnect', json_encode([]));
     }
 
     public function render()

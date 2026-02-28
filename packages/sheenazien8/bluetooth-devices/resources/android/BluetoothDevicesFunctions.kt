@@ -8,10 +8,12 @@ import com.nativephp.mobile.bridge.Bridge
 import com.nativephp.mobile.bridge.BridgeFunction
 import com.nativephp.mobile.bridge.BridgeResponse
 import com.nativephp.mobile.event.NativeEvent
+import android.util.Log
 
 object BluetoothDevicesFunctions {
     class StartScan(private val context: Context) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
+            Log.d("BluetoothBridge", "Starting a new BLE scan...")
             val adapter = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
             val scanner = adapter.bluetoothLeScanner
 

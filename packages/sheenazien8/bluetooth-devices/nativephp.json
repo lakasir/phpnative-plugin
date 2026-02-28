@@ -43,6 +43,11 @@
             "name": "BluetoothDevices.Disconnect",
             "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.Disconnect",
             "description": "Get the current status"
+        },
+        {
+            "name": "MyPlugin.DoSomething",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.MyPluginFunctions.DoSomething",
+            "description": "Does something useful"
         }
     ],
     "android": {
