@@ -45,9 +45,14 @@
             "description": "Get the current status"
         },
         {
-            "name": "MyPlugin.DoSomething",
-            "android": "com.sheenazien8.plugins.bluetooth_devices.MyPluginFunctions.DoSomething",
-            "description": "Does something useful"
+            "name": "BluetoothDevices.CheckPermissions",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.CheckPermissions",
+            "description": "Check Bluetooth permissions status"
+        },
+        {
+            "name": "BluetoothDevices.RequestPermissions",
+            "android": "com.sheenazien8.plugins.bluetooth_devices.BluetoothDevicesFunctions.RequestPermissions",
+            "description": "Request Bluetooth permissions from user"
         }
     ],
     "android": {

@@ -17,6 +17,70 @@ class BluetoothManager extends Component
 
     public $connectionStatus = 'Idle';
 
+    public $permissionStatus = 'Initializing...';
+
+    public $errorMessage = null;
+
+    public function mount()
+    {
+        $this->permissionStatus = 'Checking permissions...';
+        // Try to check permissions on mount
+        try {
+            $this->checkPermissions();
+        } catch (\Exception $e) {
+            $this->permissionStatus = 'Error checking permissions';
+            $this->errorMessage = $e->getMessage();
+        }
+    }
+
+    public function checkPermissions()
+    {
+        $this->permissionStatus = 'Checking...';
+
+        $response = nativephp_call('BluetoothDevices.CheckPermissions', json_encode([]));
+        $result = json_decode($response, true);
+
+        if (isset($result['success']) && $result['success']) {
+            $data = $result['data'] ?? [];
+            $hasPermissions = $data['has_permissions'] ?? false;
+            $bluetoothEnabled = $data['bluetooth_enabled'] ?? false;
+
+            if (! $hasPermissions) {
+                $this->permissionStatus = 'Permissions needed';
+            } elseif (! $bluetoothEnabled) {
+                $this->permissionStatus = 'Bluetooth off';
+            } else {
+                $this->permissionStatus = 'Ready';
+            }
+        } else {
+            $this->permissionStatus = 'Permission check failed';
+            $this->errorMessage = $result['message'] ?? 'Unknown error';
+        }
+    }
+
+    public function requestPermissions()
+    {
+        $this->permissionStatus = 'Requesting...';
+        $this->errorMessage = null;
+
+        try {
+            $response = nativephp_call('BluetoothDevices.RequestPermissions', json_encode([]));
+            $result = json_decode($response, true);
+
+            if (isset($result['success']) && $result['success']) {
+                // Wait a moment then check again
+                sleep(1);
+                $this->checkPermissions();
+            } else {
+                $this->permissionStatus = 'Request failed';
+                $this->errorMessage = $result['message'] ?? 'Failed to request';
+            }
+        } catch (\Exception $e) {
+            $this->permissionStatus = 'Error requesting';
+            $this->errorMessage = $e->getMessage();
+        }
+    }
+
     public function start()
     {
         $this->isScanning = true;
@@ -35,7 +99,7 @@ class BluetoothManager extends Component
     public function connect($address)
     {
         $this->connectionStatus = 'Connecting...';
-        nativephp_call('BluetoothDevices.StopScan'); // Stop scan to save battery
+        nativephp_call('BluetoothDevices.StopScan');
         nativephp_call('BluetoothDevices.Connect', json_encode(['address' => $address]));
     }
 
