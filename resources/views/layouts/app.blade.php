@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@yield('title', config('app.name', 'Laravel'))</title>
+        <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -19,7 +19,7 @@
         @livewireStyles
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] min-h-screen nativephp-safe-area">
-        @yield('content')
+        {{ $slot }}
         @livewireScripts
     </body>
 </html>

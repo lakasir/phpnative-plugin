@@ -15,7 +15,7 @@
         "livewire/blaze": "^1.0",
         "livewire/livewire": "^4.0",
         "nativephp/mobile": "^3.0",
-        "sheenazien8/bluetooth-devices": "^1.0"
+        "sheenazien8/bluetooth-devices": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -110,7 +110,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "/home/sheenazien8/Documents/Code/lakasir-project/php_native_bridge/packages/sheenazien8/bluetooth-devices"
+            "url": "./packages/sheenazien8/bluetooth-devices"
         }
     ],
     "minimum-stability": "stable",

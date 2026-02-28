@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "448617fc9312358bd961bf6427d10f95",
+    "content-hash": "97ef974ae6690eaf2d7bc3876906e13b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -4114,8 +4114,8 @@
             "version": "1.0.0",
             "dist": {
                 "type": "path",
-                "url": "/home/sheenazien8/Documents/Code/lakasir-project/php_native_bridge/packages/sheenazien8/bluetooth-devices",
-                "reference": "5c7a63032699f1a4abc787ee3ad25dd1092301bf"
+                "url": "./packages/sheenazien8/bluetooth-devices",
+                "reference": "2ed98de5134d4707d7ce023066db4ec2194e30e6"
             },
             "require": {
                 "nativephp/mobile": "^3.0",
@@ -4156,7 +4156,7 @@
             ],
             "description": "A plugin that can fetch bluetooth devices for you nativephp",
             "transport-options": {
-                "relative": false
+                "relative": true
             }
         },
         {
