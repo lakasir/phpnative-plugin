@@ -27,9 +27,17 @@ class BluetoothManager extends Component
 
     public $errorMessage = null;
 
+    public function mount(): void
+    {
+        $this->checkPermissions();
+    }
+
     public function checkPermissions(): void
     {
-        $this->permissionStatus = 'Checking...';
+        // Only show "Checking..." on initial load
+        if ($this->permissionStatus === 'Initializing...') {
+            $this->permissionStatus = 'Checking...';
+        }
         $this->errorMessage = null;
 
         try {
