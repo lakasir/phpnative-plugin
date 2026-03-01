@@ -1,0 +1,154 @@
+// Card styles
+.card {
+    background-color: $bg-white;
+    border: 1px solid $border-light;
+    border-radius: $radius-xl;
+    padding: $space-5;
+    box-shadow: $shadow-sm;
+    transition: box-shadow $transition-normal;
+
+    &:hover {
+        box-shadow: $shadow-md;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $bg-dark-card;
+        border-color: $border-dark;
+    }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-3;
+}
+
+.card-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    @media (prefers-color-scheme: dark) {
+        color: $text-white;
+    }
+}
+
+// Alert cards
+.alert {
+    padding: $space-4;
+    border-radius: $radius-lg;
+    border: 1px solid transparent;
+
+    &-error {
+        background-color: $bg-red-100;
+        border-color: #fecaca;
+        color: #b91c1c;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: rgba(127, 29, 29, 0.3);
+            border-color: #7f1d1d;
+            color: #fca5a5;
+        }
+    }
+
+    &-warning {
+        background-color: $bg-yellow-50;
+        border-color: #fde68a;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: rgba(113, 63, 18, 0.2);
+            border-color: #713f12;
+        }
+    }
+}
+
+// Permission card
+.permission-card {
+    padding: $space-6;
+    text-align: center;
+    background-color: $bg-yellow-50;
+    border: 1px solid #fde68a;
+    border-radius: $radius-xl;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: rgba(113, 63, 18, 0.2);
+        border-color: #713f12;
+    }
+}
+
+.permission-icon {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto $space-3;
+    color: $color-warning;
+}
+
+.permission-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: $space-2;
+    color: #1f2937;
+
+    @media (prefers-color-scheme: dark) {
+        color: $text-white;
+    }
+}
+
+.permission-text {
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-bottom: $space-4;
+
+    @media (prefers-color-scheme: dark) {
+        color: #9ca3af;
+    }
+}
+
+.permission-status {
+    font-size: 0.75rem;
+    color: $text-tertiary;
+    margin-top: $space-3;
+}
+
+// Empty state card
+.empty-state {
+    text-align: center;
+    padding: $space-12;
+    background-color: $bg-gray-50;
+    border: 1px dashed #d1d5db;
+    border-radius: $radius-xl;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $bg-dark-card-alt;
+        border-color: $border-dark;
+    }
+
+    &-icon {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto $space-3;
+        color: #d1d5db;
+
+        @media (prefers-color-scheme: dark) {
+            color: #4b5563;
+        }
+    }
+
+    &-text {
+        font-size: 0.875rem;
+        color: $text-secondary;
+
+        @media (prefers-color-scheme: dark) {
+            color: #9ca3af;
+        }
+    }
+
+    &-subtext {
+        font-size: 0.75rem;
+        color: $text-tertiary;
+        margin-top: $space-1;
+    }
+}

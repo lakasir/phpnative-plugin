@@ -2,18 +2,23 @@ import {
     defineConfig
 } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from "@tailwindcss/vite";
-import { nativephpMobile } from './vendor/nativephp/mobile/resources/js/vite-plugin'; // Add this
+import { nativephpMobile } from './vendor/nativephp/mobile/resources/js/vite-plugin';
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: ['resources/scss/app.scss', 'resources/js/app.js'],
             refresh: true,
         }),
-        tailwindcss(),
-        nativephpMobile(), // Add this here
+        nativephpMobile(),
     ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                quietDeps: true,
+            },
+        },
+    },
     server: {
         cors: true,
         watch: {

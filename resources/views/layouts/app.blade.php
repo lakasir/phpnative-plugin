@@ -15,10 +15,10 @@
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
         <!-- Styles / Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/scss/app.scss', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] min-h-screen nativephp-safe-area">
+    <body class="nativephp-safe-area">
         {{ $slot }}
         @livewireScripts
     </body>

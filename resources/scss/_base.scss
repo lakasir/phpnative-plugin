@@ -1,0 +1,91 @@
+// Reset and base styles
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: $bg-white;
+    color: $text-primary;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color-scheme: light;
+    font-family: $font-sans;
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: $bg-dark;
+        color: $text-white;
+    }
+}
+
+// NativePHP safe area - uses CSS custom properties injected by NativePHP
+// NativePHP dynamically injects CSS with orientation-specific rules
+// Portrait: padding-top/bottom only | Landscape: padding-left/right only
+// These !important rules ensure our styles take precedence
+
+// Base safe area - all sides (used as fallback)
+.nativephp-safe-area {
+    padding-top: var(--inset-top, 0px) !important;
+    padding-bottom: var(--inset-bottom, 0px) !important;
+    padding-left: var(--inset-left, 0px) !important;
+    padding-right: var(--inset-right, 0px) !important;
+}
+
+// Orientation-specific overrides (matching NativePHP behavior)
+@media (orientation: portrait) {
+    .nativephp-safe-area {
+        padding-top: var(--inset-top, 0px) !important;
+        padding-bottom: var(--inset-bottom, 0px) !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}
+
+@media (orientation: landscape) {
+    .nativephp-safe-area {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        padding-left: var(--inset-left, 0px) !important;
+        padding-right: var(--inset-right, 0px) !important;
+    }
+}
+
+// Individual safe area utilities
+.safe-area-top {
+    padding-top: var(--inset-top, 0px) !important;
+}
+
+.safe-area-bottom {
+    padding-bottom: var(--inset-bottom, 0px) !important;
+}
+
+.safe-area-left {
+    padding-left: var(--inset-left, 0px) !important;
+}
+
+.safe-area-right {
+    padding-right: var(--inset-right, 0px) !important;
+}
+
+// Margin versions for fixed positioned elements
+.margin-safe-top {
+    margin-top: var(--inset-top, 0px) !important;
+}
+
+.margin-safe-bottom {
+    margin-bottom: var(--inset-bottom, 0px) !important;
+}
+
+.margin-safe-left {
+    margin-left: var(--inset-left, 0px) !important;
+}
+
+.margin-safe-right {
+    margin-right: var(--inset-right, 0px) !important;
+}

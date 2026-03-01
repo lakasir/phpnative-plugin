@@ -1,0 +1,81 @@
+// Button styles
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
+    padding: $space-3 $space-6;
+    border-radius: $radius-lg;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border: none;
+    transition: all $transition-normal;
+    box-shadow: $shadow-sm;
+    white-space: nowrap;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: $shadow-md;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+}
+
+.btn-primary {
+    background-color: $color-primary;
+    color: $text-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-primary-hover;
+    }
+}
+
+.btn-success {
+    background-color: $color-success;
+    color: $text-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-success-hover;
+    }
+}
+
+.btn-danger {
+    background-color: $color-danger;
+    color: $text-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-danger-hover;
+    }
+}
+
+.btn-warning {
+    background-color: $color-warning;
+    color: $text-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-warning-hover;
+    }
+}
+
+.btn-sm {
+    padding: $space-2 $space-4;
+    font-size: 0.8125rem;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+// Loading state
+.btn-loading {
+    opacity: 0.75;
+    cursor: wait;
+}

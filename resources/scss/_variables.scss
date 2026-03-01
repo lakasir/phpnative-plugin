@@ -1,0 +1,73 @@
+// Colors
+$color-primary: #3b82f6;
+$color-primary-hover: #2563eb;
+$color-secondary: #6b7280;
+$color-success: #22c55e;
+$color-success-hover: #16a34a;
+$color-danger: #ef4444;
+$color-danger-hover: #dc2626;
+$color-warning: #eab308;
+$color-warning-hover: #ca8a04;
+
+// Background colors
+$bg-white: #ffffff;
+$bg-gray-50: #f9fafb;
+$bg-gray-100: #f3f4f6;
+$bg-red-100: #fee2e2;
+$bg-yellow-50: #fefce8;
+$bg-yellow-100: #fef9c3;
+$bg-green-100: #dcfce7;
+$bg-blue-100: #dbeafe;
+
+// Dark mode backgrounds
+$bg-dark: #0a0a0a;
+$bg-dark-card: #161615;
+$bg-dark-card-alt: #1c1c1a;
+$bg-dark-border: #3e3e3a;
+
+// Text colors
+$text-primary: #1b1b18;
+$text-secondary: #6b7280;
+$text-tertiary: #9ca3af;
+$text-white: #ffffff;
+$text-dark-secondary: #a1a09a;
+
+// Border colors
+$border-light: #e5e7eb;
+$border-dark: #3e3e3a;
+
+// Spacing
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-12: 3rem;
+
+// Border radius
+$radius-sm: 0.375rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+// Transitions
+$transition-fast: 150ms ease-in-out;
+$transition-normal: 200ms ease-in-out;
+
+// Font
+$font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+$font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;

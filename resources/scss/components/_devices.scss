@@ -1,0 +1,138 @@
+// Device list styles
+.devices-section {
+    margin-top: $space-4;
+}
+
+.devices-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-3;
+}
+
+.devices-title {
+    font-weight: 600;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    @media (prefers-color-scheme: dark) {
+        color: $text-dark-secondary;
+    }
+}
+
+.device-count {
+    padding: $space-1 $space-2;
+    background-color: $bg-blue-100;
+    color: $color-primary;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: $radius-full;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: rgba(59, 130, 246, 0.2);
+        color: #93c5fd;
+    }
+}
+
+.device-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+}
+
+.device-item {
+    padding: $space-4;
+    border: 1px solid $border-light;
+    border-radius: $radius-xl;
+    background-color: $bg-white;
+    box-shadow: $shadow-sm;
+    transition: box-shadow $transition-normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover {
+        box-shadow: $shadow-md;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $bg-dark-card-alt;
+        border-color: $border-dark;
+    }
+}
+
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+}
+
+.device-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: $radius-full;
+    background-color: $bg-blue-100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: rgba(59, 130, 246, 0.2);
+    }
+
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: $color-primary;
+
+        @media (prefers-color-scheme: dark) {
+            color: #93c5fd;
+        }
+    }
+}
+
+.device-details {
+    .device-name {
+        font-weight: 600;
+        color: #1f2937;
+
+        @media (prefers-color-scheme: dark) {
+            color: $text-white;
+        }
+    }
+
+    .device-address {
+        font-size: 0.75rem;
+        font-family: $font-mono;
+        color: #9ca3af;
+    }
+}
+
+.device-connect-btn {
+    background-color: $color-success;
+    color: $text-white;
+    padding: $space-2 $space-4;
+    border-radius: $radius-lg;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    transition: all $transition-normal;
+    box-shadow: $shadow-sm;
+
+    &:hover:not(:disabled) {
+        background-color: $color-success-hover;
+        transform: translateY(-1px);
+        box-shadow: $shadow-md;
+    }
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}

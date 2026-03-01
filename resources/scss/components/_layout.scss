@@ -1,0 +1,193 @@
+// Layout styles
+.container {
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: $space-4;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $space-6;
+
+    @media (min-width: $breakpoint-lg) {
+        padding: $space-8;
+    }
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.gap-2 {
+    gap: $space-2;
+}
+
+.gap-3 {
+    gap: $space-3;
+}
+
+// Text utilities
+.text-center {
+    text-align: center;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.font-mono {
+    font-family: $font-mono;
+}
+
+// Status badge
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: $space-1 $space-2;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: $radius-full;
+
+    &-ready {
+        background-color: $bg-green-100;
+        color: #15803d;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+    }
+}
+
+.status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: $radius-full;
+    margin-right: $space-1;
+
+    &-green {
+        background-color: #22c55e;
+    }
+
+    &-yellow {
+        background-color: #eab308;
+    }
+
+    &-blue {
+        background-color: #3b82f6;
+    }
+
+    &-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+}
+
+// Spin animation
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+// Info row
+.info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+
+    .info-label {
+        color: $text-secondary;
+
+        @media (prefers-color-scheme: dark) {
+            color: $text-dark-secondary;
+        }
+    }
+
+    .info-value {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: $space-1;
+    }
+}
+
+.info-value-green {
+    color: #16a34a;
+}
+
+.info-value-yellow {
+    color: #ca8a04;
+}
+
+.info-value-blue {
+    color: #2563eb;
+}
