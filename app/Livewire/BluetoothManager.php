@@ -9,6 +9,7 @@ use Native\Mobile\Attributes\OnNative;
 use Sheenazien8\BluetoothDevices\Events\BluetoothDeviceFound;
 use Sheenazien8\BluetoothDevices\Events\BluetoothPermissionsChecked;
 use Sheenazien8\BluetoothDevices\Events\BluetoothScanError;
+use Sheenazien8\BluetoothDevices\Events\BluetoothScanStopped;
 use Sheenazien8\BluetoothDevices\Events\BluetoothStateChanged;
 use Sheenazien8\BluetoothDevices\Facades\BluetoothDevices;
 
