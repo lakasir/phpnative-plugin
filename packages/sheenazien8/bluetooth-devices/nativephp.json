@@ -84,7 +84,10 @@
     },
     "secrets": [],
     "events": [
-        "Sheenazien8\\BluetoothDevices\\Events\\BluetoothDevicesCompleted"
+        "Sheenazien8\\BluetoothDevices\\Events\\BluetoothPermissionsChecked",
+        "Sheenazien8\\BluetoothDevices\\Events\\BluetoothDeviceFound",
+        "Sheenazien8\\BluetoothDevices\\Events\\BluetoothScanError",
+        "Sheenazien8\\BluetoothDevices\\Events\\BluetoothStateChanged"
     ],
     "service_provider": "Sheenazien8\\BluetoothDevices\\BluetoothDevicesServiceProvider",
     "hooks": {

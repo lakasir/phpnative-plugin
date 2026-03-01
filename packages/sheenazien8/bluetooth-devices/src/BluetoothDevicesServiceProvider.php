@@ -10,13 +10,12 @@ class BluetoothDevicesServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(BluetoothDevices::class, function () {
-            return new BluetoothDevices();
+            return new BluetoothDevices;
         });
     }
 
     public function boot(): void
     {
-        // Register plugin hook commands
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CopyAssetsCommand::class,

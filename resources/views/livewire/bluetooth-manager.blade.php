@@ -1,4 +1,4 @@
-<div class="p-4 max-w-2xl mx-auto">
+<div class="p-4 max-w-2xl mx-auto" wire:init="checkPermissions">
     <div class="flex flex-col gap-4">
 
         <!-- Error Message -->
